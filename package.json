@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon ./filter_git_db.js",
     "ingest":"node ./ingestRepos.js",
-    "process":"node ./processRepos.js"
+    "process":"node ./processRepos.js",
+    "start":"node ./filter_git_db.js"
   },
   "keywords": [],
   "author": "",

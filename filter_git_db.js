@@ -7,12 +7,12 @@ const { createClient } = require("@supabase/supabase-js");
 // -------------------
 
 const octokit = new Octokit({
-  auth: process.env.GITHUB_TOKEN,
+    auth: process.env.GIT_TOKEN,
 });
 
 const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_KEY
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_KEY
 );
 
 const allowedLicenses = ["mit", "apache-2.0", "bsd-3-clause"];
@@ -22,49 +22,78 @@ const allowedLicenses = ["mit", "apache-2.0", "bsd-3-clause"];
 // ======================================================
 
 async function ingestRepos() {
-  console.log("📥 Fetching repositories from GitHub...");
-async function searchPopularRepos() {
-  const allRepos = [];
+    console.log("📥 Fetching repositories from GitHub...");
 
-for (let page = 1; page <= 10; page++) {
-  const { data } = await octokit.rest.search.repos({
-    q: "stars:>=500 created:>=2025-01-01 archived:false fork:false",
-    sort: "stars",
-    order: "desc",
-    per_page: 100,
-    page,
-  });
+    async function searchPopularRepos() {
+        const allRepos = [];
 
-  allRepos.push(...data.items);
-}
+        const languages = [
+            "Python",
+            "JavaScript",
+            "TypeScript",
+            "Java",
+            "Go",
+            "Rust",
+            "C++",
+            "C"
+        ];
 
-return allRepos
-}
-let allRepos=await searchPopularRepos()
- 
+        for (const language of languages) {
+            console.log(`🔎 Fetching ${language} repos...`);
 
-  console.log(`🔎 Total fetched: ${allRepos.length}`);
+            for (let page = 1; page <= 5; page++) {
+                const { data } = await octokit.rest.search.repos({
+                    q: `stars:>=5000 created:>=2023-01-01 archived:false fork:false language:"${language}"`,
+                    sort: "stars",
+                    order: "desc",
+                    per_page: 100,
+                    page,
+                });
 
-  const filtered = allRepos.filter(repo =>
-    allowedLicenses.includes(repo.license?.key)
-  );
-console.log(`🔎 Total filtered repos with license: ${filtered.length}`);
-  const formatted = filtered.map(repo => ({
-    id: repo.id,
-    owner: repo.owner.login,
-    repo_name: repo.name,
-    repo_html_url: repo.html_url,
-    stars: repo.stargazers_count,
-    licensed: repo.license?.key || null,
-  }));
+                allRepos.push(...data.items);
 
-  const { error } = await supabase
-    .from("repos")
-    .upsert(formatted, { onConflict: "id" });
+                // Stop early if fewer than 100 results returned
+                if (data.items.length < 100) break;
 
-  if (error) throw error;
+                // Small delay to avoid abuse detection
+                await new Promise(resolve => setTimeout(resolve, 1200));
+            }
+        }
 
-  console.log(`✅ ${formatted.length} repos stored in DB`);
+        // Remove duplicates (repos can sometimes overlap)
+        const uniqueRepos = Array.from(
+            new Map(allRepos.map(repo => [repo.id, repo])).values()
+        );
+
+        return uniqueRepos;
+    }
+
+
+    let allRepos = await searchPopularRepos()
+
+
+    console.log(`🔎 Total fetched: ${allRepos.length}`);
+
+    const filtered = allRepos.filter(repo =>
+        allowedLicenses.includes(repo.license?.key)
+    );
+    console.log(`🔎 Total filtered repos with license: ${filtered.length}`);
+    const formatted = filtered.map(repo => ({
+        id: repo.id,
+        owner: repo.owner.login,
+        repo_name: repo.name,
+        repo_html_url: repo.html_url,
+        stars: repo.stargazers_count,
+        licensed: repo.license?.key || null,
+    }));
+
+    const { error } = await supabase
+        .from("repos")
+        .upsert(formatted, { onConflict: "id" });
+
+    if (error) throw error;
+
+    console.log(`✅ ${formatted.length} repos stored in DB`);
 }
 
 
@@ -73,15 +102,15 @@ console.log(`🔎 Total filtered repos with license: ${filtered.length}`);
 // ======================================================
 
 async function fetchPendingRepos(limit = 100) {
-  const { data, error } = await supabase
-    .from("repos")
-    .select("*")
-    .is("processed", null)
-    .limit(limit);
+    const { data, error } = await supabase
+        .from("repos")
+        .select("*")
+        .is("processed", null)
+        .limit(limit);
 
-  if (error) throw error;
+    if (error) throw error;
 
-  return data;
+    return data;
 }
 
 // ======================================================
@@ -89,14 +118,14 @@ async function fetchPendingRepos(limit = 100) {
 // ======================================================
 
 async function searchPRs(owner, repo) {
-  const { data } = await octokit.rest.search.issuesAndPullRequests({
-    q: `repo:${owner}/${repo} is:pr is:merged`,
-    sort: "updated",
-    order: "desc",
-    per_page: 10,
-  });
+    const { data } = await octokit.rest.search.issuesAndPullRequests({
+        q: `repo:${owner}/${repo} is:pr is:merged`,
+        sort: "updated",
+        order: "desc",
+        per_page: 10,
+    });
 
-  return data.items;
+    return data.items;
 }
 
 // ======================================================
@@ -104,46 +133,46 @@ async function searchPRs(owner, repo) {
 // ======================================================
 
 async function validatePR(owner, repo, pull_number) {
-  const pr = await octokit.rest.pulls.get({
-    owner,
-    repo,
-    pull_number,
-  });
+    const pr = await octokit.rest.pulls.get({
+        owner,
+        repo,
+        pull_number,
+    });
 
-  const totalChanges = pr.data.additions + pr.data.deletions;
+    const totalChanges = pr.data.additions + pr.data.deletions;
 
-  if (totalChanges < 500) return null;
-  if (pr.data.changed_files < 5) return null;
+    if (totalChanges < 500) return null;
+    if (pr.data.changed_files < 5) return null;
 
-  const files = await octokit.rest.pulls.listFiles({
-    owner,
-    repo,
-    pull_number,
-  });
+    const files = await octokit.rest.pulls.listFiles({
+        owner,
+        repo,
+        pull_number,
+    });
 
-  const hasTests = files.data.some(file =>
-    file.filename.toLowerCase().includes("test") ||
-    file.filename.toLowerCase().includes("spec")
-  );
+    const hasTests = files.data.some(file =>
+        file.filename.toLowerCase().includes("test") ||
+        file.filename.toLowerCase().includes("spec")
+    );
 
-  if (!hasTests) return null;
+    if (!hasTests) return null;
 
-  const status = await octokit.rest.repos.getCombinedStatusForRef({
-    owner,
-    repo,
-    ref: pr.data.head.sha,
-  });
+    const status = await octokit.rest.repos.getCombinedStatusForRef({
+        owner,
+        repo,
+        ref: pr.data.head.sha,
+    });
 
-  if (status.data.state !== "success") return null;
+    if (status.data.state !== "success") return null;
 
-  return {
-    id: pr.data.id,
-    pr_number: pr.data.number,
-    pr_html_url: pr.data.html_url,
-    additions: pr.data.additions,
-    deletions: pr.data.deletions,
-    changed_files: pr.data.changed_files,
-  };
+    return {
+        id: pr.data.id,
+        pr_number: pr.data.number,
+        pr_html_url: pr.data.html_url,
+        additions: pr.data.additions,
+        deletions: pr.data.deletions,
+        changed_files: pr.data.changed_files,
+    };
 }
 
 // ======================================================
@@ -151,41 +180,41 @@ async function validatePR(owner, repo, pull_number) {
 // ======================================================
 
 async function processRepos() {
-  const repos = await fetchPendingRepos(100);
- console.log(`fetched pending repo : ${repos.length}`)
-  for (const repo of repos) {
-    console.log(`🔍 Processing ${repo.owner}/${repo.repo_name}`);
+    const repos = await fetchPendingRepos(50);
+    console.log(`fetched pending repo : ${repos.length}`)
+    for (const repo of repos) {
+        console.log(`🔍 Processing ${repo.owner}/${repo.repo_name}`);
 
-    const prs = await searchPRs(repo.owner, repo.repo_name);
+        const prs = await searchPRs(repo.owner, repo.repo_name);
 
-    for (const pr of prs) {
-      const validPR = await validatePR(
-        repo.owner,
-        repo.repo_name,
-        pr.number
-      );
+        for (const pr of prs) {
+            const validPR = await validatePR(
+                repo.owner,
+                repo.repo_name,
+                pr.number
+            );
 
-      if (validPR) {
-        console.log("✅ Valid PR found:", validPR.pr_html_url);
+            if (validPR) {
+                console.log("✅ Valid PR found:", validPR.pr_html_url);
 
-        await supabase.from("pull_requests").upsert(
-          {
-            ...validPR,
-            repo_id: repo.id,
-          },
-          { onConflict: "id" }
-        );
-      }
+                await supabase.from("pull_requests").upsert(
+                    {
+                        ...validPR,
+                        repo_id: repo.id,
+                    },
+                    { onConflict: "id" }
+                );
+            }
+        }
+
+        // mark repo as processed after checking all PRs
+        await supabase
+            .from("repos")
+            .update({ processed: true })
+            .eq("id", repo.id);
+
+        console.log(`✔ Repo ${repo.repo_name} marked processed`);
     }
-
-    // mark repo as processed after checking all PRs
-    await supabase
-      .from("repos")
-      .update({ processed: true })
-      .eq("id", repo.id);
-
-    console.log(`✔ Repo ${repo.repo_name} marked processed`);
-  }
 }
 
 // ======================================================
@@ -193,16 +222,16 @@ async function processRepos() {
 // ======================================================
 
 async function run() {
-  try {
-    console.log("🚀 Pipeline Started\n");
+    try {
+        console.log("🚀 Pipeline Started\n");
 
-    await ingestRepos();
-    await processRepos();
+        await ingestRepos();
+        await processRepos();
 
-    console.log("\n🎉 Pipeline Completed");
-  } catch (err) {
-    console.error("❌ Error:", err.message);
-  }
+        console.log("\n🎉 Pipeline Completed");
+    } catch (err) {
+        console.error("❌ Error:", err.message);
+    }
 }
 
 run();

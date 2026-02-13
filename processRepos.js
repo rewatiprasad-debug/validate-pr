@@ -3,7 +3,7 @@ const { Octokit } = require("@octokit/rest");
 const { createClient } = require("@supabase/supabase-js");
 
 const octokit = new Octokit({
-  auth: process.env.GITHUB_TOKEN,
+  auth: process.env.GIT_TOKEN,
 });
 
 const supabase = createClient(

@@ -6,6 +6,11 @@ const octokit = new Octokit({
   auth: process.env.GIT_TOKEN,
 });
 
+const authenticatedUser = async () => {
+  const { data: user } = await octokit.rest.users.getAuthenticated();
+  console.log("Authenticated as:", user.login);
+}
+
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_KEY
@@ -60,6 +65,8 @@ const allowedLicenses = ["mit", "apache-2.0", "bsd-3-clause"];
 // }
 
 async function ingestRepos() {
+
+    await authenticatedUser();
     console.log("📥 Fetching repositories from GitHub...");
 
     async function searchPopularRepos() {
@@ -78,7 +85,7 @@ async function ingestRepos() {
 
         for (const language of languages) {
             
-            for (let page = 1; page <= 5; page++) {
+            for (let page = 1; page <= 1; page++) {
                 const { data } = await octokit.rest.search.repos({
                     q: `stars:>=5000 created:>=2023-01-01 archived:false fork:false language:"${language}"`,
                     sort: "stars",

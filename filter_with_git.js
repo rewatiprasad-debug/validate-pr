@@ -6,15 +6,16 @@ require('dotenv').config();
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
 });
+
 let finalResult=[]
 
 async function searchPopularRepos() {
   const { data } = await octokit.rest.search.repos({
-    q: "stars:>=1000 archived:false fork:false",
+    q: "stars:>=3000 archived:false fork:false",
     sort: "stars",
     order: "desc",
-    per_page: 50,
-    page:10 // adjust as neede
+    per_page: 100,
+    page:1 // adjust as neede
   });
 
   
@@ -24,13 +25,26 @@ async function searchPopularRepos() {
 
 const allowedLicenses = ["mit", "apache-2.0", "bsd-3-clause"];
 
-function filterPermissiveRepos(repos) {
-  return repos.filter(repo =>
+async function filterPermissiveRepos(repos) {
+  let filteredRepos=repos.filter(repo =>
     allowedLicenses.includes(repo.license?.key)
   );
+  const formatted = filteredRepos.map((repo) => ({
+  id: repo.id,
+  owner: repo.owner.login,
+  repo_html_url: repo.html_url,
+  stars: repo.stargazers_count,
+  licensed: repo.license?.name || null,
+}));
+
+await supabase
+  .from("repos")
+  .upsert(formatted, { onConflict: "id" });
+
 }
 
 async function searchPRs(owner, repo) {
+  console.log(`Searching for PRs in repo: ${owner}/${repo}`);
   const { data } = await octokit.rest.search.issuesAndPullRequests({
     q: `repo:${owner}/${repo} is:pr is:merged`,
     sort: "updated",

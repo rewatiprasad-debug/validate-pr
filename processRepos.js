@@ -138,12 +138,12 @@ async function processRepos() {
 
 async function run() {
   try {
-    console.log("🚀 Ingest Pipeline Started\n");
+    console.log("🚀 Process Pipeline Started\n");
 
     
     await processRepos();
 
-    console.log("\n🎉  Ingest Pipeline Completed");
+    console.log("\n🎉  Process Pipeline Completed");
   } catch (err) {
     console.error("❌ Error:", err.message);
   }

@@ -1,258 +1,234 @@
 [
-  {
-    "pr": {
-      "url": "https://api.github.com/repos/affaan-m/everything-claude-code/issues/146",
-      "repository_url": "https://api.github.com/repos/affaan-m/everything-claude-code",
-      "labels_url": "https://api.github.com/repos/affaan-m/everything-claude-code/issues/146/labels{/name}",
-      "comments_url": "https://api.github.com/repos/affaan-m/everything-claude-code/issues/146/comments",
-      "events_url": "https://api.github.com/repos/affaan-m/everything-claude-code/issues/146/events",
-      "html_url": "https://github.com/affaan-m/everything-claude-code/pull/146",
-      "id": 3886351228,
-      "node_id": "PR_kwDOQ77-1M7A76R1",
-      "number": 146,
-      "title": "refactor(rules): restructure into common + language-specific directories",
-      "user": {
-        "login": "Hor1zonZzz",
-        "id": 105845016,
-        "node_id": "U_kgDOBk8RGA",
-        "avatar_url": "https://avatars.githubusercontent.com/u/105845016?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/Hor1zonZzz",
-        "html_url": "https://github.com/Hor1zonZzz",
-        "followers_url": "https://api.github.com/users/Hor1zonZzz/followers",
-        "following_url": "https://api.github.com/users/Hor1zonZzz/following{/other_user}",
-        "gists_url": "https://api.github.com/users/Hor1zonZzz/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/Hor1zonZzz/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/Hor1zonZzz/subscriptions",
-        "organizations_url": "https://api.github.com/users/Hor1zonZzz/orgs",
-        "repos_url": "https://api.github.com/users/Hor1zonZzz/repos",
-        "events_url": "https://api.github.com/users/Hor1zonZzz/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/Hor1zonZzz/received_events",
-        "type": "User",
-        "user_view_type": "public",
-        "site_admin": false
-      },
-      "labels": [],
-      "state": "closed",
-      "locked": false,
-      "assignee": null,
-      "assignees": [],
-      "milestone": null,
-      "comments": 11,
-      "created_at": "2026-02-02T14:49:27Z",
-      "updated_at": "2026-02-05T13:58:06Z",
-      "closed_at": "2026-02-05T13:58:06Z",
-      "author_association": "NONE",
-      "active_lock_reason": null,
-      "draft": false,
-      "pull_request": {
-        "url": "https://api.github.com/repos/affaan-m/everything-claude-code/pulls/146",
-        "html_url": "https://github.com/affaan-m/everything-claude-code/pull/146",
-        "diff_url": "https://github.com/affaan-m/everything-claude-code/pull/146.diff",
-        "patch_url": "https://github.com/affaan-m/everything-claude-code/pull/146.patch",
-        "merged_at": "2026-02-05T13:58:06Z"
-      },
-      "body": "## Summary\n\n- Restructure `rules/` from 8 flat TS/JS-centric files into `common/` + `typescript/` + `python/` + `golang/` directories\n- `common/` contains 8 language-agnostic rule files (no code examples, pseudocode only)\n- Each language directory contains 5 files extending the common rules with language-specific patterns, tools, and hooks\n- Replace deprecated `ultrathink` section with current extended thinking documentation\n- Add `README.md` with installation guide and new-language template\n\n## Structure\n\n```\nrules/\n├── README.md\n├── common/          (8 files - language-agnostic)\n├── typescript/      (5 files - TS/JS specific)\n├── python/          (5 files - Python specific)\n└── golang/          (5 files - Go specific)\n```\n\n## Test plan\n\n- [x] `common/` has 8 files, `typescript/` `python/` `golang/` each have 5 files\n- [x] `common/` files contain no language-specific code examples\n- [x] Language-specific files reference their `common/` counterpart in the header\n- [x] All content from original 8 files is preserved (split across common + typescript)\n- [x] Original 8 root-level rule files are deleted\n- [x] Python/Go files reference existing skills without duplicating content\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\n<!-- This is an auto-generated comment: release notes by coderabbit.ai -->\n## Summary by CodeRabbit\n\n* **Documentation**\n  * Added a rules framework README and centralized common coding-style and patterns guidance.\n  * Added language-specific rule sets for Go, Python, and TypeScript (coding style, hooks, patterns, testing, security).\n  * Removed an outdated coding-style doc and pruned obsolete hook sections.\n  * Updated performance guidance (extended thinking controls) and replaced low-level secret snippets with high-level security guidance.\n<!-- end of auto-generated comment: release notes by coderabbit.ai -->",
-      "reactions": {
-        "url": "https://api.github.com/repos/affaan-m/everything-claude-code/issues/146/reactions",
-        "total_count": 1,
-        "+1": 1,
-        "-1": 0,
-        "laugh": 0,
-        "hooray": 0,
-        "confused": 0,
-        "heart": 0,
-        "rocket": 0,
-        "eyes": 0
-      },
-      "timeline_url": "https://api.github.com/repos/affaan-m/everything-claude-code/issues/146/timeline",
-      "performed_via_github_app": null,
-      "state_reason": null,
-      "score": 1
+  [
+    {
+      "pr": "https://github.com/flutter/flutter/pull/176393"
+    },
+    {
+      "pr": "https://github.com/huggingface/transformers/pull/43830"
+    },
+    {
+      "pr": "https://github.com/kubernetes/kubernetes/pull/136729"
+    },
+    {
+      "pr": "https://github.com/excalidraw/excalidraw/pull/10611"
+    },
+    {
+      "pr": "https://github.com/excalidraw/excalidraw/pull/10749"
+    },
+    {
+      "pr": "https://github.com/microsoft/TypeScript/pull/62628"
+    },
+    {
+      "pr": "https://github.com/microsoft/TypeScript/pull/63071"
+    },
+    {
+      "pr": "https://github.com/microsoft/TypeScript/pull/63084"
+    },
+    {
+      "pr": "https://github.com/microsoft/TypeScript/pull/63046"
+    },
+    {
+      "pr": "https://github.com/denoland/deno/pull/32058"
+    },
+    {
+      "pr": "https://github.com/supabase/supabase/pull/42374"
+    },
+    {
+      "pr": "https://github.com/ant-design/ant-design/pull/56959"
+    },
+    {
+      "pr": "https://github.com/ant-design/ant-design/pull/56855"
+    },
+    {
+      "pr": "https://github.com/ant-design/ant-design/pull/56953"
+    },
+    {
+      "pr": "https://github.com/fastapi/fastapi/pull/14897"
     }
-  },
-  {
-    "pr": {
-      "url": "https://api.github.com/repos/streamlit/streamlit/issues/13901",
-      "repository_url": "https://api.github.com/repos/streamlit/streamlit",
-      "labels_url": "https://api.github.com/repos/streamlit/streamlit/issues/13901/labels{/name}",
-      "comments_url": "https://api.github.com/repos/streamlit/streamlit/issues/13901/comments",
-      "events_url": "https://api.github.com/repos/streamlit/streamlit/issues/13901/events",
-      "html_url": "https://github.com/streamlit/streamlit/pull/13901",
-      "id": 3923867751,
-      "node_id": "PR_kwDODCoeTs7C3bog",
-      "number": 13901,
-      "title": "Bind widgets to query params - `st.text_input` & `st.text_area`",
-      "user": {
-        "login": "mayagbarnes",
-        "id": 63436329,
-        "node_id": "MDQ6VXNlcjYzNDM2MzI5",
-        "avatar_url": "https://avatars.githubusercontent.com/u/63436329?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/mayagbarnes",
-        "html_url": "https://github.com/mayagbarnes",
-        "followers_url": "https://api.github.com/users/mayagbarnes/followers",
-        "following_url": "https://api.github.com/users/mayagbarnes/following{/other_user}",
-        "gists_url": "https://api.github.com/users/mayagbarnes/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/mayagbarnes/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/mayagbarnes/subscriptions",
-        "organizations_url": "https://api.github.com/users/mayagbarnes/orgs",
-        "repos_url": "https://api.github.com/users/mayagbarnes/repos",
-        "events_url": "https://api.github.com/users/mayagbarnes/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/mayagbarnes/received_events",
-        "type": "User",
-        "user_view_type": "public",
-        "site_admin": false
-      },
-      "labels": [
-        {
-          "id": 4804598999,
-          "node_id": "LA_kwDODCoeTs8AAAABHmBc1w",
-          "url": "https://api.github.com/repos/streamlit/streamlit/labels/security-assessment-completed",
-          "name": "security-assessment-completed",
-          "color": "69056A",
-          "default": false,
-          "description": "Security assessment has been completed for PR"
-        },
-        {
-          "id": 5584916269,
-          "node_id": "LA_kwDODCoeTs8AAAABTOMPLQ",
-          "url": "https://api.github.com/repos/streamlit/streamlit/labels/change:feature",
-          "name": "change:feature",
-          "color": "4B8059",
-          "default": false,
-          "description": "PR contains new feature or enhancement implementation"
-        },
-        {
-          "id": 5584919480,
-          "node_id": "LA_kwDODCoeTs8AAAABTOMbuA",
-          "url": "https://api.github.com/repos/streamlit/streamlit/labels/impact:users",
-          "name": "impact:users",
-          "color": "E96227",
-          "default": false,
-          "description": "PR changes affect end users"
-        }
-      ],
-      "state": "closed",
-      "locked": false,
-      "assignee": null,
-      "assignees": [],
-      "milestone": null,
-      "comments": 3,
-      "created_at": "2026-02-10T22:36:23Z",
-      "updated_at": "2026-02-11T23:33:23Z",
-      "closed_at": "2026-02-11T23:33:20Z",
-      "author_association": "COLLABORATOR",
-      "type": null,
-      "active_lock_reason": null,
-      "draft": false,
-      "pull_request": {
-        "url": "https://api.github.com/repos/streamlit/streamlit/pulls/13901",
-        "html_url": "https://github.com/streamlit/streamlit/pull/13901",
-        "diff_url": "https://github.com/streamlit/streamlit/pull/13901.diff",
-        "patch_url": "https://github.com/streamlit/streamlit/pull/13901.patch",
-        "merged_at": "2026-02-11T23:33:20Z"
-      },
-      "body": "## Describe your changes\r\nAdds the bind parameter to `st.text_input` & `st.text_area` to enable two-way sync between widget values and URL query parameters.\r\n\r\n* Raises `StreamlitAPIException` when `bind=\"query-params\"` is used with `type=\"password\"` on `text_input`\r\n* TextArea consistency fix: Removed extra `element.default` fallback in `getStateFromWidgetMgr` to align with TextInput and fix URL-seeded values not populating the UI\r\n* Typing tests for public API signatures\r\n\r\n## Testing Plan\r\n- JS & Python Unit Tests: ✅ Added\r\n- E2E Tests: ✅ Added\r\n- Manual Testing: ✅ ",
-      "reactions": {
-        "url": "https://api.github.com/repos/streamlit/streamlit/issues/13901/reactions",
-        "total_count": 0,
-        "+1": 0,
-        "-1": 0,
-        "laugh": 0,
-        "hooray": 0,
-        "confused": 0,
-        "heart": 0,
-        "rocket": 0,
-        "eyes": 0
-      },
-      "timeline_url": "https://api.github.com/repos/streamlit/streamlit/issues/13901/timeline",
-      "performed_via_github_app": null,
-      "state_reason": null,
-      "score": 1
+  ],
+  [
+    {
+      "pr": "https://github.com/flutter/flutter/pull/176393"
+    },
+    {
+      "pr": "https://github.com/huggingface/transformers/pull/43830"
+    },
+    {
+      "pr": "https://github.com/kubernetes/kubernetes/pull/136729"
+    },
+    {
+      "pr": "https://github.com/excalidraw/excalidraw/pull/10611"
+    },
+    {
+      "pr": "https://github.com/excalidraw/excalidraw/pull/10749"
+    },
+    {
+      "pr": "https://github.com/microsoft/TypeScript/pull/62628"
+    },
+    {
+      "pr": "https://github.com/microsoft/TypeScript/pull/63071"
+    },
+    {
+      "pr": "https://github.com/microsoft/TypeScript/pull/63084"
+    },
+    {
+      "pr": "https://github.com/microsoft/TypeScript/pull/63046"
+    },
+    {
+      "pr": "https://github.com/denoland/deno/pull/32058"
+    },
+    {
+      "pr": "https://github.com/supabase/supabase/pull/42374"
+    },
+    {
+      "pr": "https://github.com/ant-design/ant-design/pull/56959"
+    },
+    {
+      "pr": "https://github.com/ant-design/ant-design/pull/56855"
+    },
+    {
+      "pr": "https://github.com/ant-design/ant-design/pull/56953"
+    },
+    {
+      "pr": "https://github.com/fastapi/fastapi/pull/14897"
     }
-  },
-  {
-    "pr": {
-      "url": "https://api.github.com/repos/FuelLabs/fuels-ts/issues/3950",
-      "repository_url": "https://api.github.com/repos/FuelLabs/fuels-ts",
-      "labels_url": "https://api.github.com/repos/FuelLabs/fuels-ts/issues/3950/labels{/name}",
-      "comments_url": "https://api.github.com/repos/FuelLabs/fuels-ts/issues/3950/comments",
-      "events_url": "https://api.github.com/repos/FuelLabs/fuels-ts/issues/3950/events",
-      "html_url": "https://github.com/FuelLabs/fuels-ts/pull/3950",
-      "id": 3559276290,
-      "node_id": "PR_kwDOGAMoj86wBtUf",
-      "number": 3950,
-      "title": "feat: add support for fuel-core v0.47.1",
-      "user": {
-        "login": "luizstacio",
-        "id": 3941923,
-        "node_id": "MDQ6VXNlcjM5NDE5MjM=",
-        "avatar_url": "https://avatars.githubusercontent.com/u/3941923?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/luizstacio",
-        "html_url": "https://github.com/luizstacio",
-        "followers_url": "https://api.github.com/users/luizstacio/followers",
-        "following_url": "https://api.github.com/users/luizstacio/following{/other_user}",
-        "gists_url": "https://api.github.com/users/luizstacio/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/luizstacio/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/luizstacio/subscriptions",
-        "organizations_url": "https://api.github.com/users/luizstacio/orgs",
-        "repos_url": "https://api.github.com/users/luizstacio/repos",
-        "events_url": "https://api.github.com/users/luizstacio/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/luizstacio/received_events",
-        "type": "User",
-        "user_view_type": "public",
-        "site_admin": false
-      },
-      "labels": [
-        {
-          "id": 3321193912,
-          "node_id": "MDU6TGFiZWwzMzIxMTkzOTEy",
-          "url": "https://api.github.com/repos/FuelLabs/fuels-ts/labels/feat",
-          "name": "feat",
-          "color": "0E8A16",
-          "default": false,
-          "description": "Issue is a feature"
-        }
-      ],
-      "state": "closed",
-      "locked": false,
-      "assignee": null,
-      "assignees": [],
-      "milestone": null,
-      "comments": 3,
-      "created_at": "2025-10-28T01:09:06Z",
-      "updated_at": "2025-10-29T16:26:56Z",
-      "closed_at": "2025-10-29T16:21:53Z",
-      "author_association": "CONTRIBUTOR",
-      "type": null,
-      "active_lock_reason": null,
-      "draft": false,
-      "pull_request": {
-        "url": "https://api.github.com/repos/FuelLabs/fuels-ts/pulls/3950",
-        "html_url": "https://github.com/FuelLabs/fuels-ts/pull/3950",
-        "diff_url": "https://github.com/FuelLabs/fuels-ts/pull/3950.diff",
-        "patch_url": "https://github.com/FuelLabs/fuels-ts/pull/3950.patch",
-        "merged_at": "2025-10-29T16:21:53Z"
-      },
-      "body": "Closes #3948\r\n\r\n# Release notes\r\n\r\nIn this release, we:\r\n\r\n- Update fuel-core support to v0.47.1\r\n- Add support to new policy owner\r\n- Add logic and tests for support unknown policy types.\r\n\r\n# Checklist\r\n\r\n- [x] All **changes** are **covered** by **tests** (or not applicable)\r\n- [ ] All **changes** are **documented** (or not applicable)\r\n- [x] I **reviewed** the **entire PR** myself (preferably, on GH UI)\r\n- [ ] I **described** all **Breaking Changes** (or there's none)\r\n",
-      "reactions": {
-        "url": "https://api.github.com/repos/FuelLabs/fuels-ts/issues/3950/reactions",
-        "total_count": 1,
-        "+1": 0,
-        "-1": 0,
-        "laugh": 0,
-        "hooray": 0,
-        "confused": 0,
-        "heart": 0,
-        "rocket": 1,
-        "eyes": 0
-      },
-      "timeline_url": "https://api.github.com/repos/FuelLabs/fuels-ts/issues/3950/timeline",
-      "performed_via_github_app": null,
-      "state_reason": null,
-      "score": 1
+  ],
+  [
+    {
+      "pr": "https://github.com/flutter/flutter/pull/176393"
+    },
+    {
+      "pr": "https://github.com/huggingface/transformers/pull/43830"
+    },
+    {
+      "pr": "https://github.com/kubernetes/kubernetes/pull/136729"
+    },
+    {
+      "pr": "https://github.com/excalidraw/excalidraw/pull/10611"
+    },
+    {
+      "pr": "https://github.com/excalidraw/excalidraw/pull/10749"
+    },
+    {
+      "pr": "https://github.com/microsoft/TypeScript/pull/62628"
+    },
+    {
+      "pr": "https://github.com/microsoft/TypeScript/pull/63071"
+    },
+    {
+      "pr": "https://github.com/microsoft/TypeScript/pull/63084"
+    },
+    {
+      "pr": "https://github.com/microsoft/TypeScript/pull/63046"
+    },
+    {
+      "pr": "https://github.com/denoland/deno/pull/32058"
+    },
+    {
+      "pr": "https://github.com/supabase/supabase/pull/42374"
+    },
+    {
+      "pr": "https://github.com/ant-design/ant-design/pull/56959"
+    },
+    {
+      "pr": "https://github.com/ant-design/ant-design/pull/56855"
+    },
+    {
+      "pr": "https://github.com/ant-design/ant-design/pull/56953"
+    },
+    {
+      "pr": "https://github.com/fastapi/fastapi/pull/14897"
     }
-  }
+  ],
+  [
+    {
+      "pr": "https://github.com/flutter/flutter/pull/176393"
+    },
+    {
+      "pr": "https://github.com/huggingface/transformers/pull/43830"
+    },
+    {
+      "pr": "https://github.com/kubernetes/kubernetes/pull/136729"
+    },
+    {
+      "pr": "https://github.com/excalidraw/excalidraw/pull/10611"
+    },
+    {
+      "pr": "https://github.com/excalidraw/excalidraw/pull/10749"
+    },
+    {
+      "pr": "https://github.com/microsoft/TypeScript/pull/62628"
+    },
+    {
+      "pr": "https://github.com/microsoft/TypeScript/pull/63071"
+    },
+    {
+      "pr": "https://github.com/microsoft/TypeScript/pull/63084"
+    },
+    {
+      "pr": "https://github.com/microsoft/TypeScript/pull/63046"
+    },
+    {
+      "pr": "https://github.com/denoland/deno/pull/32058"
+    },
+    {
+      "pr": "https://github.com/supabase/supabase/pull/42374"
+    },
+    {
+      "pr": "https://github.com/ant-design/ant-design/pull/56959"
+    },
+    {
+      "pr": "https://github.com/ant-design/ant-design/pull/56855"
+    },
+    {
+      "pr": "https://github.com/ant-design/ant-design/pull/56953"
+    },
+    {
+      "pr": "https://github.com/fastapi/fastapi/pull/14897"
+    }
+  ],
+  [
+    {
+      "pr": "https://github.com/flutter/flutter/pull/176393"
+    },
+    {
+      "pr": "https://github.com/huggingface/transformers/pull/43830"
+    },
+    {
+      "pr": "https://github.com/kubernetes/kubernetes/pull/136729"
+    },
+    {
+      "pr": "https://github.com/excalidraw/excalidraw/pull/10611"
+    },
+    {
+      "pr": "https://github.com/excalidraw/excalidraw/pull/10749"
+    },
+    {
+      "pr": "https://github.com/microsoft/TypeScript/pull/62628"
+    },
+    {
+      "pr": "https://github.com/microsoft/TypeScript/pull/63071"
+    },
+    {
+      "pr": "https://github.com/microsoft/TypeScript/pull/63084"
+    },
+    {
+      "pr": "https://github.com/microsoft/TypeScript/pull/63046"
+    },
+    {
+      "pr": "https://github.com/denoland/deno/pull/32058"
+    },
+    {
+      "pr": "https://github.com/supabase/supabase/pull/42374"
+    },
+    {
+      "pr": "https://github.com/ant-design/ant-design/pull/56959"
+    },
+    {
+      "pr": "https://github.com/ant-design/ant-design/pull/56855"
+    },
+    {
+      "pr": "https://github.com/fastapi/fastapi/pull/14897"
+    }
+  ]
 ]

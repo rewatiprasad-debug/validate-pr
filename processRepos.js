@@ -95,7 +95,7 @@ async function validatePR(owner, repo, pull_number) {
 
 
 async function processRepos() {
-  const repos = await fetchPendingRepos(10);
+  const repos = await fetchPendingRepos(100);
  console.log(`fetched pending repo : ${repos.length}`)
   for (const repo of repos) {
     console.log(`🔍 Processing ${repo.owner}/${repo.repo_name}`);

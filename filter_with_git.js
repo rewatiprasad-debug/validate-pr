@@ -1,7 +1,8 @@
 const {Octokit}=require('@octokit/rest')
-const fs = require("fs");
+const fs = require("fs").promises;
 const path = require("path");
 require('dotenv').config();
+const { appendFile } = require("fs/promises");
 
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
@@ -9,17 +10,21 @@ const octokit = new Octokit({
 let finalResult=[]
 
 async function searchPopularRepos() {
+  const allRepos = [];
+
+for (let page = 1; page <= 10; page++) {
   const { data } = await octokit.rest.search.repos({
-    q: "stars:>=1000 archived:false fork:false",
+    q: "stars:>=4000 archived:false fork:false",
     sort: "stars",
     order: "desc",
-    per_page: 50,
-    page:10 // adjust as neede
+    per_page: 100,
+    page,
   });
 
-  
+  allRepos.push(...data.items);
+}
 
-  return data.items;
+return allRepos
 }
 
 const allowedLicenses = ["mit", "apache-2.0", "bsd-3-clause"];
@@ -77,22 +82,53 @@ async function validatePR(owner, repo, pull_number) {
   return true;
 }
 
-function saveResultsToJSON(data, filename = "results.json") {
-  try {
-    // Convert array to JSON string with indentation
-    const jsonContent = JSON.stringify(data, null, 2);
+// function saveResultsToJSON(data, filename = "results.json") {
+//   try {
+//     // Convert array to JSON string with indentation
+//     const jsonContent = JSON.stringify(data, null, 2);
 
-    // Resolve path relative to current directory
+//     // Resolve path relative to current directory
+//     const filePath = path.resolve(__dirname, filename);
+
+//     // Write file
+//     fs.writeFileSync(filePath, jsonContent, "utf8");
+
+//     console.log(`✅ Results saved to ${filePath}`);
+//   } catch (error) {
+//     console.error("❌ Error writing JSON file:", error);
+//   }
+// }
+async function saveResultsToTXT(newData, filename = "results.txt") {
+  try {
     const filePath = path.resolve(__dirname, filename);
 
-    // Write file
-    fs.writeFileSync(filePath, jsonContent, "utf8");
+    // Ensure it's always an array
+    if (!Array.isArray(newData)) {
+      newData = [newData];
+    }
 
-    console.log(`✅ Results saved to ${filePath}`);
+    // Format each URL like: "url",
+    const formattedData =
+      newData.map(url => `"${url}",`).join("\n") + "\n";
+
+    // Append to file (does NOT overwrite)
+    await appendFile(filePath, formattedData, "utf8");
+
+    console.log(`✅ Data appended to ${filePath}`);
   } catch (error) {
-    console.error("❌ Error writing JSON file:", error);
+    console.error("❌ Error writing TXT file:", error);
   }
 }
+
+async function appendToFile(data_string) {
+  try {
+    await fs.appendFile('example.txt', data_string+','+'\n', 'utf8');
+    console.log('Content appended successfully');
+  } catch (err) {
+    console.error('Error appending to file:', err);
+  }
+}
+
 
 async function runPipeline() {
     console.log("process start........")
@@ -100,13 +136,9 @@ async function runPipeline() {
   console.log(`fetching total no of repos : ${repos.length}`)
   
   const filteredRepos = filterPermissiveRepos(repos);
-//   console.log(filteredRepos[0])
-//   console.log(`total no of repo after filtering with mit License : ${filteredRepos.length}`)
-//   console.log('find the list of the repos which having 1000+ starts and mit licensed')
-//   filteredRepos.map((repo)=>{
-    
-//     console.log(`Repo name : ${repo.full_name}- stars : ${repo.stargazers_count} license : ${repo.license?.name} `)
-//   })
+
+  console.log(`total no of repo after filtering with mit License : ${filteredRepos.length}`)
+
 
   for (const repo of filteredRepos) {
     console.log(`Checking repo: ${repo.full_name}`);
@@ -122,16 +154,14 @@ async function runPipeline() {
 
       if (isValid) {
         console.log("✅ Valid PR found:", pr.html_url);
+        appendToFile(String(pr.html_url))
+
         
 
-        finalResult.push({ pr
-            
-        })
       }
     }
   }
-  console.log(finalResult)
-        saveResultsToJSON(finalResult, "validPRs.json")
+        // saveResultsToTXT(finalResult, "validPRs.txt")
 }
 
 runPipeline()

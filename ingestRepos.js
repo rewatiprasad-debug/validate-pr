@@ -20,7 +20,7 @@ async function searchPopularRepos() {
 
 for (let page = 1; page <= 10; page++) {
   const { data } = await octokit.rest.search.repos({
-    q: "stars:>=500 created:>=2025-01-01 archived:false fork:false",
+    q: "stars:>=500 created:>=2024-01-01 archived:false fork:false",
     sort: "stars",
     order: "desc",
     per_page: 100,

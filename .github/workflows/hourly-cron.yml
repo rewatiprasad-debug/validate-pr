@@ -28,7 +28,7 @@ jobs:
         run: npm ci
 
       - name: Run ingest pipeline
-        run: node run ingest
+        run: npm run ingest
 
       - name: Run process pipeline
-        run: node run process
+        run: npm run process

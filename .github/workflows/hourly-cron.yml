@@ -1,4 +1,4 @@
-name: Run Pipeline Hourly
+name: Run Ingest Process Pipeline Hourly
 
 on:
   schedule:

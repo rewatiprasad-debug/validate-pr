@@ -77,8 +77,7 @@ async function ingestRepos() {
         ];
 
         for (const language of languages) {
-            console.log(`🔎 Fetching ${language} repos...`);
-
+            
             for (let page = 1; page <= 5; page++) {
                 const { data } = await octokit.rest.search.repos({
                     q: `stars:>=5000 created:>=2023-01-01 archived:false fork:false language:"${language}"`,
@@ -87,11 +86,11 @@ async function ingestRepos() {
                     per_page: 100,
                     page,
                 });
-
+                console.log(`🔎 Fetched ${data.items.length} ${language} repos`);
                 allRepos.push(...data.items);
 
                 // Stop early if fewer than 100 results returned
-                if (data.items.length < 100) break;
+                // if (data.items.length < 100) break;
 
                 // Small delay to avoid abuse detection
                 await new Promise(resolve => setTimeout(resolve, 1200));

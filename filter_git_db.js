@@ -43,7 +43,7 @@ async function ingestRepos() {
 
             for (let page = 1; page <= 5; page++) {
                 const { data } = await octokit.rest.search.repos({
-                    q: `stars:>=5000 created:>=2023-01-01 archived:false fork:false language:"${language}"`,
+                    q: `stars:>=1000 created:>=2023-01-01 archived:false fork:false language:"${language}"`,
                     sort: "stars",
                     order: "desc",
                     per_page: 100,

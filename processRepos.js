@@ -11,6 +11,11 @@ const supabase = createClient(
   process.env.SUPABASE_KEY
 );
 
+const authenticatedUser = async () => {
+  const { data: user } = await octokit.rest.users.getAuthenticated();
+  console.log("Authenticated as:", user.login);
+}
+
 // ======================================================
 // 2️⃣ FETCH UNPROCESSED REPOS FROM DB
 // ======================================================
@@ -95,6 +100,7 @@ async function validatePR(owner, repo, pull_number) {
 
 
 async function processRepos() {
+  await authenticatedUser();
   const repos = await fetchPendingRepos(100);
  console.log(`fetched pending repo : ${repos.length}`)
   for (const repo of repos) {
